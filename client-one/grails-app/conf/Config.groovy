@@ -115,3 +115,14 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+oauth {
+    providers {
+        server {
+            api = nardhar.oauth.ServerApi
+            key = 'my-client-one'
+            secret = 'my-secret-one'
+        }
+    }
+}
+

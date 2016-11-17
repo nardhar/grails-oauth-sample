@@ -74,7 +74,7 @@ grails.spring.bean.packages = []
 grails.web.disable.multipart=false
 
 // request parameters to mask when logging exceptions
-grails.exceptionresolver.params.exclude = ['password']
+grails.exceptionresolver.params.exclude = ['password', 'client_secret']
 
 // configure auto-caching of queries by default (if false you can cache individual queries with 'cache: true')
 grails.hibernate.cache.queries = false
@@ -115,3 +115,66 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'nardhar.oauth.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'nardhar.oauth.UserRole'
+grails.plugin.springsecurity.authority.className = 'nardhar.oauth.Role'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+    '/oauth/authorize.dispatch':      ["isFullyAuthenticated() and (request.getMethod().equals('GET') or request.getMethod().equals('POST'))"],
+    '/oauth/token.dispatch':          ["isFullyAuthenticated() and request.getMethod().equals('POST')"],
+    '/':                              ['permitAll'],
+	'/index':                         ['permitAll'],
+	'/index.gsp':                     ['permitAll'],
+	'/assets/**':                     ['permitAll'],
+	'/**/js/**':                      ['permitAll'],
+	'/**/css/**':                     ['permitAll'],
+	'/**/images/**':                  ['permitAll'],
+	'/**/favicon.ico':                ['permitAll']
+]
+
+grails.plugin.springsecurity.filterChain.chainMap = [
+    '/oauth/token': 'JOINED_FILTERS,-oauth2ProviderFilter,-securityContextPersistenceFilter,-logoutFilter,-authenticationProcessingFilter,-rememberMeAuthenticationFilter,-exceptionTranslationFilter',
+    '/securedOAuth2Resources/**': 'JOINED_FILTERS,-securityContextPersistenceFilter,-logoutFilter,-authenticationProcessingFilter,-rememberMeAuthenticationFilter,-oauth2BasicAuthenticationFilter,-exceptionTranslationFilter',
+    '/**': 'JOINED_FILTERS,-statelessSecurityContextPersistenceFilter,-oauth2ProviderFilter,-clientCredentialsTokenEndpointFilter,-oauth2BasicAuthenticationFilter,-oauth2ExceptionTranslationFilter',
+    //'/**': 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter' // Traditional chain
+]
+
+grails.plugin.springsecurity.providerNames = [
+    'customAuthenticationProvider',
+    //'daoAuthenticationProvider',
+    'anonymousAuthenticationProvider',
+    'rememberMeAuthenticationProvider',
+]
+
+/*
+// Added by the Spring Security LDAP plugin:
+grails.plugin.springsecurity.ldap.context.managerDn = 'uid=admin,ou=system'
+grails.plugin.springsecurity.ldap.context.managerPassword = 'secret'
+grails.plugin.springsecurity.ldap.context.server = 'ldap://localhost:10389'
+grails.plugin.springsecurity.ldap.authorities.ignorePartialResultException = true // typically needed for Active Directory
+grails.plugin.springsecurity.ldap.search.base = 'dc=ypfb,dc=gov,dc=bo'
+grails.plugin.springsecurity.ldap.search.filter="sAMAccountName={0}" // for Active Directory you need this
+grails.plugin.springsecurity.ldap.search.searchSubtree = true
+grails.plugin.springsecurity.ldap.auth.hideUserNotFoundExceptions = false
+grails.plugin.springsecurity.ldap.search.attributesToReturn = ['mail', 'displayName'] // extra attributes you want returned; see below for custom classes that access this data
+grails.plugin.springsecurity.providerNames = ['ldapAuthProvider', 'anonymousAuthenticationProvider'] // specify this when you want to skip attempting to load from db and only use LDAP
+
+// role-specific LDAP config
+grails.plugin.springsecurity.ldap.useRememberMe = false
+grails.plugin.springsecurity.ldap.authorities.retrieveGroupRoles = true
+grails.plugin.springsecurity.ldap.authorities.groupSearchBase ='dc=ypfb,dc=gov,dc=bo'
+// If you don't want to support group membership recursion (groups in groups), then use the following setting
+grails.plugin.springsecurity.ldap.authorities.groupSearchFilter = 'member={0}' // Active Directory specific
+// If you wish to support groups with group as members (recursive groups), use the following
+grails.plugin.springsecurity.ldap.authorities.groupSearchFilter = '(member:1.2.840.113556.1.4.1941:={0})' // Active Directory specific
+*/
+
+// Added by the Spring Security OAuth2 Provider plugin:
+grails.plugin.springsecurity.oauthProvider.clientLookup.className = 'nardhar.oauth.Client'
+grails.plugin.springsecurity.oauthProvider.authorizationCodeLookup.className = 'nardhar.oauth.AuthorizationCode'
+grails.plugin.springsecurity.oauthProvider.accessTokenLookup.className = 'nardhar.oauth.AccessToken'
+grails.plugin.springsecurity.oauthProvider.refreshTokenLookup.className = 'nardhar.oauth.RefreshToken'
+grails.plugin.springsecurity.oauthProvider.defaultClientConfig.autoApproveScopes = [true]
+
+//grails.plugin.springsecurity.oauthprovider.approval.auto = UserApproval.APPROVAL_STORE

@@ -3,9 +3,10 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.work.dir = "target/work"
-grails.project.target.level = 1.6
-grails.project.source.level = 1.6
+grails.project.target.level = 1.8
+grails.project.source.level = 1.8
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
+grails.server.port.http = 8100
 
 grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
@@ -49,19 +50,19 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         // runtime 'mysql:mysql-connector-java:5.1.29'
-        // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
+        runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
         test "org.grails:grails-datastore-test-support:1.0.2-grails-2.4"
     }
 
     plugins {
         // plugins for the build system only
-        build ":tomcat:7.0.70" // or ":tomcat:8.0.22"
+        build ":tomcat:8.0.22"
 
         // plugins for the compile step
-        compile ":scaffolding:2.1.2"
+        //compile ":scaffolding:2.1.2"
         compile ':cache:1.1.8'
         // asset-pipeline 2.0+ requires Java 7, use version 1.9.x with Java 6
-        compile ":asset-pipeline:2.5.7"
+        compile ":asset-pipeline:2.9.1"
 
         // plugins needed at runtime but not for compilation
         runtime ":hibernate4:4.3.10" // or ":hibernate:3.6.10.18"
@@ -73,5 +74,10 @@ grails.project.dependency.resolution = {
         //compile ":less-asset-pipeline:1.10.0"
         //compile ":coffee-asset-pipeline:1.8.0"
         //compile ":handlebars-asset-pipeline:1.3.0.3"
+        
+        // plugins for security
+        compile "org.grails.plugins:spring-security-core:2.0.0"
+        //compile "org.grails.plugins:spring-security-ldap:2.0.1"
+        compile "org.grails.plugins:spring-security-oauth2-provider:2.0-RC5"
     }
 }

@@ -115,3 +115,15 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+oauth {
+    providers {
+        customserver {
+            api = nardhar.oauth.CustomServerApi
+            key = 'my-client-two'
+            secret = 'my-secret-two'
+            successUri = '/oauth/success'
+            failureUri = '/oauth/failure'
+        }
+    }
+}
