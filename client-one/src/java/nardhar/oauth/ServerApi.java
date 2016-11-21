@@ -79,7 +79,7 @@ public class ServerApi extends DefaultApi20 {
         public Token getAccessToken(Token requestToken, Verifier verifier) {
             // the current method was used in base of this bash example which successfully generates an
             // access_token when sending the code received in oauth/authorize
-            // curl my-client-one:my-secret-one@localhost:8100/server/oauth/token -d grant_type=authorization_code -d client_id=my-client-one -d code=7WO6Iz
+            // curl my-client-one:my-secret-one@localhost:8100/server/oauth/token -d grant_type=authorization_code -d client_id=my-client-one -d code=MYCODE
             OAuthRequest request = new OAuthRequest(api.getAccessTokenVerb(), api.getAccessTokenEndpoint());
             String encoded = Base64.getEncoder().encodeToString((config.getApiKey()+":"+config.getApiSecret()).getBytes(StandardCharsets.UTF_8));
             request.addHeader("Authorization", "Basic " + encoded);
