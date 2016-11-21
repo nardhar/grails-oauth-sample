@@ -32,7 +32,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         BCryptPasswordEncoder encoder = passwordEncoder()
-        // probando el CustomAuthenticationProvider
+        // using a CustomAuthenticationProvider for logging in with LDAP or a Database Store
         auth.authenticationProvider(authenticationProvider)
             .userDetailsService(userDetailsService)
             .passwordEncoder(encoder)

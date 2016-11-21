@@ -1,14 +1,9 @@
 package nardhar.oauth;
 
-import java.io.IOException;
-import java.net.HttpCookie;
-import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.List;
 
 import org.scribe.builder.api.DefaultApi20;
 import org.scribe.exceptions.OAuthException;
@@ -17,7 +12,6 @@ import org.scribe.model.OAuthConfig;
 import org.scribe.model.OAuthConstants;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
-import org.scribe.model.Token;
 import org.scribe.model.Token;
 import org.scribe.model.Verb;
 import org.scribe.model.Verifier;
