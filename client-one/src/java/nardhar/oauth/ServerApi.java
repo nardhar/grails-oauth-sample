@@ -90,7 +90,7 @@ public class ServerApi extends DefaultApi20 {
                 // to send the client_secret as a body parameter
                 //request.addBodyParameter(OAuthConstants.CLIENT_SECRET, config.getApiSecret());
                 request.addBodyParameter(OAuthConstants.CODE, verifier.getValue());
-                // if we send the REDIRECT URI it responds with error: {error_description: 'cannot parse redirect uri'}
+                // if we send the REDIRECT URI it responds with error: {error_description: 'Redirect URI mismatch'}
                 // because it reads the config.getCallback() as something really different from whats configured ('oob' ????)
                 //request.addBodyParameter(OAuthConstants.REDIRECT_URI, config.getCallback());
                 request.addBodyParameter(GRANT_TYPE, GRANT_TYPE_AUTHORIZATION_CODE);
