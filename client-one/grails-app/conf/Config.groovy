@@ -122,7 +122,9 @@ oauth {
             api = nardhar.oauth.ServerApi
             key = 'my-client-one'
             secret = 'my-secret-one'
+            successUri = 'http://localhost:8110/client-one/oauthLogin/success'
         }
     }
+    debug = true
 }
 

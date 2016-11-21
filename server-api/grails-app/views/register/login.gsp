@@ -6,7 +6,7 @@
 </head>
 <body>
     <g:form class="form-signin" method="post" action="login">
-        <input type="hidden"  name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="hidden" name="${_csrf?.parameterName}" value="${_csrf?.token}"/>
         <label for="inputUsername" class="sr-only"><g:message code="user.username.label" /></label>
         <input type="text" id="inputUsername" name="username" value="${request.getSession().getAttribute("SPRING_SECURITY_LAST_USERNAME")}"
                class="form-control" placeholder="${message(code: 'user.username.label')}" required="" autofocus="">

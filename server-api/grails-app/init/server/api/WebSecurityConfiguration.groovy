@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository
+import org.springframework.security.web.csrf.CsrfFilter
 
 @Configuration
 @EnableWebSecurity
@@ -31,10 +32,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         BCryptPasswordEncoder encoder = passwordEncoder()
-        // modificar el authentication provider para que haga referencia a un CustomAuthenticationProvider
-        // que combine ldap y la autenticacion por db
-        /* auth.userDetailsService(userDetailsService)
-            .passwordEncoder(encoder) */
         // probando el CustomAuthenticationProvider
         auth.authenticationProvider(authenticationProvider)
             .userDetailsService(userDetailsService)
@@ -61,7 +58,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService)
             .and()
                 .csrf()
+                //.disable()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+        CsrfTokenResponseHeaderBindingFilter csrfTokenFilter = new CsrfTokenResponseHeaderBindingFilter()    
+        http.addFilterAfter(csrfTokenFilter, CsrfFilter.class)
     }
 
     @Override

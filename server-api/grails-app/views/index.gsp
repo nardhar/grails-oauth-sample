@@ -7,7 +7,7 @@
 </head>
 <body>
     Show current apps or info about user profile
-    <g:form url="/logout">
+    <g:form controller="register" action="logout">
         <input type="hidden"  name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <button class="btn btn-link" type="submit"><g:message code="user.logout.button" /></button>
     </g:form>

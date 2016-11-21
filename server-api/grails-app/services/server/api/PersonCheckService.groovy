@@ -44,6 +44,9 @@ class PersonCheckService {
         def username = params.username
         def password = params.password
         def user = Person.findByUsername(username)
+        if (!user) {
+            return null
+        }
         if (!passwordEncoder.isPasswordValid(user?.password, password, null)) {
             return null
         }
