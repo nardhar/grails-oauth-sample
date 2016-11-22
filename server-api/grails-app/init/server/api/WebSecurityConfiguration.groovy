@@ -39,13 +39,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+    @Order(2) // establishing a corresponding order so it configures it BEFORE the ResourceServer
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 .loginPage('/login')
                 .permitAll()
                 //.failureHandler(authenticationFailureHandler)
                 //.failureForwardUrl('/login?error')
+            .and()
+                .requestMatchers()
+                .antMatchers("/", "/login", "/logout", "/oauth/authorize", "/oauth/confirm_access")
             .and()
                 .authorizeRequests()
                 .antMatchers("/assets/**").permitAll()
@@ -58,7 +61,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService)
             .and()
                 .csrf()
-                //.disable()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         CsrfTokenResponseHeaderBindingFilter csrfTokenFilter = new CsrfTokenResponseHeaderBindingFilter()    
         http.addFilterAfter(csrfTokenFilter, CsrfFilter.class)

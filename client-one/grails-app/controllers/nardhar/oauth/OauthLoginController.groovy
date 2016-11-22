@@ -1,16 +1,23 @@
 package nardhar.oauth
 
 import grails.converters.JSON
+import uk.co.desirableobjects.oauth.scribe.OauthService
 
 class OauthLoginController {
 
-    def oauthService
+    OauthService oauthService
 
     def index() { }
 
     def success() {
-        def result = oauthService.getServerResource('http://localhost:8100/server/profile')
-        render result as JSON
+        // the 'server' is the the name of the current oauth2 provider
+        def tokenServer = session[oauthService.findSessionKeyForAccessToken('server')]
+        def result = oauthService.getServerResource(
+            tokenServer,
+            'http://localhost:8100/server/profile'
+        ).body
+        def resultJson = JSON.parse(result) as LinkedHashMap
+        render resultJson as JSON
     }
 
 }

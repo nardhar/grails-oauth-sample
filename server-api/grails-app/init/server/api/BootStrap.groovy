@@ -14,7 +14,7 @@ class BootStrap {
         def adminRole = SecurityRole.findByAuthority('ROLE_ADMIN') ?: new SecurityRole(authority: 'ROLE_ADMIN').save(failOnError: true)
         def userRole = SecurityRole.findByAuthority('ROLE_CLIENT') ?: new SecurityRole(authority: 'ROLE_CLIENT').save(failOnError: true)
 
-        def user1 = Person.findByUsername('sampleperson') ?: new Person(username: 'sampleperson', email: 'sampleperson@example.com', password: 'xyz', fullName: 'Sample Person').save(failOnError: true)
+        def user1 = Person.findByUsername('sampleperson@example.com') ?: new Person(username: 'sampleperson@example.com', email: 'sampleperson@example.com', password: 'xyz', fullName: 'Sample Person').save(failOnError: true)
         if (!user1.securityRoles.contains(userRole)) {
             PersonSecurityRole.create user1, userRole, true
         }
